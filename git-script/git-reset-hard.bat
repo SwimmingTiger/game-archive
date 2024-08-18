@@ -1,2 +1,3 @@
 cd /d %~dp0
-git reset --hard
+wsl git add ER0000.sl2
+wsl git reset --hard

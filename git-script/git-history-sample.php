@@ -2,6 +2,11 @@
 <?php
 $saveFile = 'ER0000.sl2';
 
+passthru('./git-commit.sh');
+
+exec('git branch --show-current', $currentBranch);
+$currentBranch = implode('', $currentBranch);
+
 exec('git log --pretty=format:"%s|%H"', $output);
 
 $timeHashMap = [];
@@ -36,4 +41,15 @@ git add './$saveFile';
 git commit -m '$commit[time]';
 EOF
 );
+}
+
+passthru(
+<<<EOF
+cd ./tmp;
+proxychains4 git push
+EOF
+);
+
+if (!empty($currentBranch)) {
+	passthru("git checkout '$currentBranch'");
 }
